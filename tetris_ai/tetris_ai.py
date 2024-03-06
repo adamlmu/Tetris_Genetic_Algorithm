@@ -5,10 +5,11 @@ import tetris_ai.tetris_base as game
 # size   = [640, 480]
 # screen = pygame.display.set_mode((size[0], size[1]))
 
-def run_game(chromosome, speed, max_score = 20000, no_show = True):
+def run_game(chromosome):
 
-    game.FPS = int(speed)
-    game.main()
+    game.FPS = int(600)
+    game.main(isGame = False)
+    max_score = 20000
 
     board            = game.get_blank_board()
     last_fall_time   = time.time()
@@ -39,7 +40,7 @@ def run_game(chromosome, speed, max_score = 20000, no_show = True):
             next_piece    = game.get_new_piece()
 
             # Decide the best move based on your weights
-            chromosome.calc_best_move(board, falling_piece, no_show)
+            chromosome.calc_best_move(board, falling_piece)
 
             # Update number of used pieces and the score
             num_used_pieces +=1
@@ -53,7 +54,7 @@ def run_game(chromosome, speed, max_score = 20000, no_show = True):
                 # Can't fit a new piece on the board, so game over.
                 alive = False
 
-        if no_show or time.time() - last_fall_time > fall_freq:
+        if time.time() - last_fall_time > fall_freq:
             if (not game.is_valid_position(board, falling_piece, adj_Y=1)):
                 # Falling piece has landed, set it on the board
                 game.add_to_board(board, falling_piece)
@@ -82,10 +83,6 @@ def run_game(chromosome, speed, max_score = 20000, no_show = True):
                 # Piece did not land, just move the piece down
                 falling_piece['y'] += 1
                 last_fall_time = time.time()
-
-        # if (not no_show):
-        #     draw_game_on_screen(board, score, level, next_piece, falling_piece,
-        #                         chromosome)
 
         # Stop condition
         if (score > max_score):

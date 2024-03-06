@@ -1,14 +1,12 @@
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 import random, time, pygame, sys
 from pygame.locals import *
-import tetris_ai.tetris_base as game
 import tetris_ai.tetris_ai as ai
-import tetris_ai.ga as ga #TD take the chromosome class elsewhere
+from tetris_ai.chromosome import chromosome
 
-# TDL: figure out how to get from a vector to a score
 
 class TetrisEvaluator(SimpleIndividualEvaluator):
-    """Evaluator class for super mario game,
+    """Evaluator class for tetris game,
     responsible for defining a fitness evaluation method and evaluating it."""
 
     def __init__(self, ):
@@ -31,8 +29,8 @@ class TetrisEvaluator(SimpleIndividualEvaluator):
         fitness_value = 0
         individual_vector = individual.get_vector()
         print(individual_vector)
-        chromo = ga.Chromosome(individual_vector)
-        game_state = ai.run_game(chromo, 600, 20000, False)
+        chromo = chromosome(individual_vector)
+        game_state = ai.run_game(chromo)
         chromo.calc_fitness(game_state)
         fitness_value = chromo.score
 
