@@ -1,11 +1,11 @@
 import random, time, pygame, sys
-from pygame.locals import *
+# from pygame.locals import *
 import tetris_ai.tetris_base as game
 
-size   = [640, 480]
-screen = pygame.display.set_mode((size[0], size[1]))
+# size   = [640, 480]
+# screen = pygame.display.set_mode((size[0], size[1]))
 
-def run_game(chromosome, speed, max_score = 20000, no_show = False):
+def run_game(chromosome, speed, max_score = 20000, no_show = True):
 
     game.FPS = int(speed)
     game.main()
@@ -83,9 +83,9 @@ def run_game(chromosome, speed, max_score = 20000, no_show = False):
                 falling_piece['y'] += 1
                 last_fall_time = time.time()
 
-        if (not no_show):
-            draw_game_on_screen(board, score, level, next_piece, falling_piece,
-                                chromosome)
+        # if (not no_show):
+        #     draw_game_on_screen(board, score, level, next_piece, falling_piece,
+        #                         chromosome)
 
         # Stop condition
         if (score > max_score):
