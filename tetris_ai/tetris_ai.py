@@ -1,5 +1,5 @@
 import random, time, pygame, sys
-# from pygame.locals import *
+from pygame.locals import *
 import tetris_ai.tetris_base as game
 
 # size   = [640, 480]
@@ -97,16 +97,17 @@ def run_game(chromosome, speed, max_score = 20000, no_show = True):
 
     return game_state
 
-def draw_game_on_screen(board, score, level, next_piece, falling_piece, chromosome):
-    """Draw game on the screen"""
+# def draw_game_on_screen(board, score, level, next_piece, falling_piece, chromosome):
+#     """Draw game on the screen"""
 
-    game.DISPLAYSURF.fill(game.BGCOLOR)
-    game.draw_board(board)
-    game.draw_status(score, level)
-    game.draw_next_piece(next_piece)
+#     game.DISPLAYSURF.fill(game.BGCOLOR)
+#     game.draw_board(board)
+#     game.draw_status(score, level)
+#     game.draw_next_piece(next_piece)
 
-    if falling_piece != None:
-        game.draw_piece(falling_piece)
+#     if falling_piece != None:
+#         game.draw_piece(falling_piece)
 
-    pygame.display.update()
-    game.FPSCLOCK.tick(game.FPS)
+#     pygame.display.update()
+#     game.FPSCLOCK.tick(game.FPS)
+
