@@ -11,6 +11,7 @@ from TetrisEvaluator import TetrisEvaluator
 
 def eckity():
     start_time = process_time()
+    output_file = open("output.txt", "w")
 
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
@@ -24,7 +25,7 @@ def eckity():
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           VectorKPointsCrossover(probability=0.5, k=2),
-                          FloatVectorUniformNPointMutation(n=3, probability=0.05, arity=1, events=None)
+                          FloatVectorUniformNPointMutation(n=3, probability=0.05, events=None)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple
@@ -33,14 +34,15 @@ def eckity():
         breeder=SimpleBreeder(),
         # executor='thread',
         max_workers=1,
-        max_generation=5,
-        statistics=BestAverageWorstStatistics()
+        max_generation=20,
+        statistics=BestAverageWorstStatistics(output_stream=output_file)
     )
 
     # evolve the generated initial population
     algo.evolve()
     # Execute (show) the best solution
     print(algo.execute())
+    output_file.close()
 
     print(f"Total time: {process_time() - start_time}")
 

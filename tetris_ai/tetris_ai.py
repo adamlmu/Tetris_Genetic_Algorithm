@@ -7,9 +7,9 @@ import tetris_ai.tetris_base as game
 
 def run_game(chromosome):
 
-    game.FPS = int(600)
+    game.FPS = int(6000)
     game.main(isGame = False)
-    max_score = 20000
+    max_score = 22000
 
     board            = game.get_blank_board()
     last_fall_time   = time.time()

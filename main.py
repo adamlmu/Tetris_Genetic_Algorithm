@@ -3,10 +3,12 @@ import tetris_ai.tetris_ai as ai
 import tetris_ai.analyser as analyser
 import matplotlib.pyplot as plt
 import argparse
-import eckitty_main
+import eckity_main
+from tetris_plot import Information
+
 
 def main():
-    eckitty_main.eckity()
+    eckity_main.eckity()
 
 if __name__ == "__main__":
     # Define argparse options
@@ -22,6 +24,11 @@ if __name__ == "__main__":
 
     if (args.ga):
         main()
+        # plot graph and print stats
+        info = Information()
+        info.read_file()
+        print(f"Best Fitness calculated: {info.best_fitness}")
+        info.plot_graph()
 
     elif (args.game):
         # Just run the base game
