@@ -187,6 +187,11 @@ def main(isGame):
         BASICFONT   = pygame.font.Font('freesansbold.ttf', 18)
         BIGFONT     = pygame.font.Font('freesansbold.ttf', 100)
         pygame.display.set_caption('Tetris AI')
+    else:
+        DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+        BASICFONT   = pygame.font.Font('freesansbold.ttf', 18)
+        BIGFONT     = pygame.font.Font('freesansbold.ttf', 100)
+        pygame.display.set_caption('Tetris AI')
 
     if (MANUAL_GAME):
         run_game()
@@ -345,7 +350,7 @@ def run_game():
         # Drawing everything on the screen
         DISPLAYSURF.fill(BGCOLOR)
         draw_board(board)
-        draw_status(score, level)
+        draw_status(score, level, None)
         draw_next_piece(next_piece)
 
         if falling_piece != None:
@@ -577,21 +582,26 @@ def draw_board(board):
             draw_box(x, y, board[x][y])
 
 
-def draw_status(score, level):
+def draw_status(score, level, generation):
     """Draw status"""
 
     # Draw the score text
     score_surf = BASICFONT.render('Score: %s' % score, True, TEXTCOLOR)
     score_rect = score_surf.get_rect()
-    score_rect.topleft = (WINDOWWIDTH - 150, 80)
+    score_rect.topleft = (WINDOWWIDTH - 150, 20)
     DISPLAYSURF.blit(score_surf, score_rect)
 
     # draw the level text
     levelSurf = BASICFONT.render('Level: %s' % level, True, TEXTCOLOR)
     levelRect = levelSurf.get_rect()
-    levelRect.topleft = (WINDOWWIDTH - 150, 110)
+    levelRect.topleft = (WINDOWWIDTH - 150, 50)
     DISPLAYSURF.blit(levelSurf, levelRect)
 
+    if(generation != None):
+        generation_surf = BASICFONT.render('Generation: %s' % generation, True, TEXTCOLOR)
+        generation_rect = generation_surf.get_rect()
+        generation_rect.topleft = (WINDOWWIDTH - 150, 80)
+        DISPLAYSURF.blit(generation_surf, generation_rect)
 
 def draw_piece(piece, pixelx=None, pixely=None):
     """Draw piece"""
