@@ -9,14 +9,14 @@ from eckity.subpopulation import Subpopulation
 from time import process_time
 from TetrisEvaluator import TetrisEvaluator
 
-def eckity():
+def eckity(pop,gen):
     start_time = process_time()
     output_file = open("output.txt", "w")
 
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(creators=GAFloatVectorCreator(length=7, gene_creator=None, bounds=(-1.0, 1.0), events=None),
-                      population_size=20,
+                      population_size=pop,
                       # user-defined fitness evaluation method
                       evaluator=TetrisEvaluator(),
                       # maximization problem (fitness is sum of values), so higher fitness is better
@@ -34,7 +34,7 @@ def eckity():
         breeder=SimpleBreeder(),
         # executor='thread',
         max_workers=1,
-        max_generation=20,
+        max_generation=gen-1,
         statistics=BestAverageWorstStatistics(output_stream=output_file)
     )
 

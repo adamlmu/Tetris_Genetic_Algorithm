@@ -1,5 +1,4 @@
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
-import random, time, pygame, sys
 from pygame.locals import *
 import tetris_ai.tetris_ai as ai
 from tetris_ai.chromosome import chromosome

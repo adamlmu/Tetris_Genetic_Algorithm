@@ -1,6 +1,6 @@
 generation #0
 subpopulation #0
-best fitness 22099
-worst fitness 28
-average fitness 4469.15
+best fitness 8018
+worst fitness 23
+average fitness 1751.1
 

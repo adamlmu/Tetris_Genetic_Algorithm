@@ -43,11 +43,7 @@ class chromosome():
                         best_R = r
                         best_Y = piece['y']
 
-        # if (show_game):
-        #     piece['y'] = best_Y
-        # else:
         piece['y'] = -2
-
         piece['x'] = best_X
         piece['rotation'] = best_R
 

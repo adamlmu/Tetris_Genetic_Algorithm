@@ -1,14 +1,7 @@
-# Tetromino (a Tetris clone)
-# By Al Sweigart al@inventwithpython.com
-# http://inventwithpython.com/pygame
-# Released under a "Simplified BSD" license
-
 import random, time, pygame, sys
 from pygame.locals import *
 
-##############################################################################
 # SETTING UP GENERAL CONSTANTS
-##############################################################################
 
 # Board config
 FPS          = 25
@@ -21,18 +14,10 @@ BLANK        = '.'
 XMARGIN      = int((WINDOWWIDTH - BOARDWIDTH * BOXSIZE) / 2)
 TOPMARGIN    = WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE) - 5
 
-# Timing config
-# Every time the player pushes the left or right arrow key down, the falling
-# piece should move one box over to the left or right, respectively. However,
-# the player can also hold down the left or right arrow key to keep moving the
-# falling piece. The MOVESIDEWAYSFREQ constant will set it so that every 0.15
-# seconds that passes with the left or right arrow key held down, the piece
-# will move another space over.
 MOVESIDEWAYSFREQ = 0.15
 MOVEDOWNFREQ     = 0.1
 
 # Colors
-#               R    G    B
 WHITE       = (255, 255, 255)
 GRAY        = (185, 185, 185)
 BLACK       = (  0,   0,   0)
@@ -55,9 +40,7 @@ LIGHTCOLORS     = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
 # Each color must have light color
 assert len(COLORS) == len(LIGHTCOLORS)
 
-# Piece Templates
-# The TEMPLATEWIDTH and TEMPLATEHEIGHT constants simply set how large each row
-# and column for each shape’s rotation should be
+# Piece Templates and column for each shape’s rotation should be
 TEMPLATEWIDTH  = 5
 TEMPLATEHEIGHT = 5
 
@@ -174,9 +157,9 @@ PIECES = {'S': S_SHAPE_TEMPLATE,
 # Define if the game is manual or not
 MANUAL_GAME = False
 
-##############################################################################
+
 # MAIN GAME
-##############################################################################
+
 def main(isGame):
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BIGFONT
     pygame.init()
@@ -202,7 +185,7 @@ def run_game():
     last_movedown_time = time.time()
     last_moveside_time = time.time()
     last_fall_time     = time.time()
-    moving_down        = False # note: there is no movingUp variable
+    moving_down        = False 
     moving_left        = False
     moving_right       = False
     score              = 0
@@ -223,8 +206,7 @@ def run_game():
             last_fall_time = time.time()
 
             if (not is_valid_position(board, falling_piece)):
-                # GAME-OVER
-                # Can't fit a new piece on the board, so game over.
+                # GAME-OVER: Can't fit a new piece on the board, so game over.
                 return
 
         # Check for quit
@@ -322,21 +304,16 @@ def run_game():
             if (not is_valid_position(board, falling_piece, adj_Y=1)):
                 # Falling piece has landed, set it on the board
                 add_to_board(board, falling_piece)
-                num_removed_lines = remove_complete_lines(board)
+                num_removed_rows = remove_complete_rows(board)
 
-                # Bonus score for complete lines at once
-                # 40   pts for 1 line
-                # 120  pts for 2 lines
-                # 300  pts for 3 lines
-                # 1200 pts for 4 lines
-
-                if(num_removed_lines == 1):
+                # Bonus score for complete rows at once (40 pts for 1 row, 120 pts for 2 rows, 300 pts for 3 rows, 1200 pts for 4 rows)
+                if(num_removed_rows == 1):
                     score += 40
-                elif (num_removed_lines == 2):
+                elif (num_removed_rows == 2):
                     score += 120
-                elif (num_removed_lines == 3):
+                elif (num_removed_rows == 3):
                     score += 300
-                elif (num_removed_lines == 4):
+                elif (num_removed_rows == 4):
                     score += 1200
 
                 level, fall_freq = calc_level_and_fall_freq(score)
@@ -360,9 +337,7 @@ def run_game():
         FPSCLOCK.tick(FPS)
 
 
-##############################################################################
 # GAME FUNCTIONS
-##############################################################################
 
 def make_text_objs(text, font, color):
     surf = font.render(text, True, color)
@@ -378,7 +353,6 @@ def terminate():
 
 def check_key_press():
     # Go through event queue looking for a KEYUP event.
-    # Grab KEYDOWN events to remove them from the event queue.
     check_quit()
 
     for event in pygame.event.get([KEYDOWN, KEYUP]):
@@ -389,8 +363,7 @@ def check_key_press():
 
 
 def show_text_screen(text):
-    # This function displays large text in the
-    # center of the screen until a key is pressed.
+    # This function displays large text in the center of the screen until a key is pressed.
 
     # Draw the text drop shadow
     title_surf, title_rect = make_text_objs(text, BIGFONT, TEXTSHADOWCOLOR)
@@ -423,12 +396,10 @@ def check_quit():
 
 
 def calc_level_and_fall_freq(score):
-    """ Calculate level and fall frequency
+    """ 
+        Calculate level and fall frequency
         Based on the score, return the level the player is on and
         how many seconds pass until a falling piece falls one space.
-
-    Args:
-        score: game score
 
     """
     level     = int(score / 400) + 1
@@ -507,14 +478,14 @@ def is_complete_line(board, y):
     return True
 
 
-def remove_complete_lines(board):
-    """Remove any completed lines on the board.
-
-    After remove any completed lines, move everything above them dowm and
-    return the number of complete lines.
+def remove_complete_rows(board):
+    """
+        Remove any completed rows on the board.
+        After remove any completed rows, move everything above them dowm and
+        return the number of complete rows.
 
     """
-    num_removed_lines = 0
+    num_removed_rows = 0
     y = BOARDHEIGHT - 1     # Start y at the bottom of the board
 
     while y >= 0:
@@ -528,7 +499,7 @@ def remove_complete_lines(board):
             for x in range(BOARDWIDTH):
                 board[x][0] = BLANK
 
-            num_removed_lines += 1
+            num_removed_rows += 1
 
             # Note on the next iteration of the loop, y is the same.
             # This is so that if the line that was pulled down is also
@@ -536,25 +507,26 @@ def remove_complete_lines(board):
         else:
             y -= 1  # Move on to check next row up
 
-    return num_removed_lines
+    return num_removed_rows
 
 
 def conv_to_pixels_coords(boxx, boxy):
-    """Convert the given xy coordinates to the screen coordinates
-
-    Convert the given xy coordinates of the board to xy coordinates of the
-    location on the screen.
+    """
+        Convert the given xy coordinates to the screen coordinates
+        Convert the given xy coordinates of the board to xy coordinates of the
+        location on the screen.
 
     """
     return (XMARGIN + (boxx * BOXSIZE)), (TOPMARGIN + (boxy * BOXSIZE))
 
 
 def draw_box(boxx, boxy, color, pixelx=None, pixely=None):
-    """Draw box
+    """
+        Draw box
 
-    Draw a single box (each tetromino piece has four boxes) at xy coordinates
-    on the board. Or, if pixelx and pixely are specified, draw to the pixel
-    coordinates stored in pixelx and pixely (this is used for the "Next" piece).
+        Draw a single box (each tetromino piece has four boxes) at xy coordinates
+        on the board. Or, if pixelx and pixely are specified, draw to the pixel
+        coordinates stored in pixelx and pixely (this is used for the "Next" piece).
 
     """
     if color == BLANK:
@@ -592,16 +564,17 @@ def draw_status(score, level, generation):
     DISPLAYSURF.blit(score_surf, score_rect)
 
     # draw the level text
-    levelSurf = BASICFONT.render('Level: %s' % level, True, TEXTCOLOR)
-    levelRect = levelSurf.get_rect()
-    levelRect.topleft = (WINDOWWIDTH - 150, 50)
-    DISPLAYSURF.blit(levelSurf, levelRect)
+    if(generation == None):
+        levelSurf = BASICFONT.render('Level: %s' % level, True, TEXTCOLOR)
+        levelRect = levelSurf.get_rect()
+        levelRect.topleft = (WINDOWWIDTH - 150, 50)
+        DISPLAYSURF.blit(levelSurf, levelRect)
 
-    if(generation != None):
-        generation_surf = BASICFONT.render('Generation: %s' % generation, True, TEXTCOLOR)
-        generation_rect = generation_surf.get_rect()
-        generation_rect.topleft = (WINDOWWIDTH - 150, 80)
-        DISPLAYSURF.blit(generation_surf, generation_rect)
+    # if(generation != None):
+    #     generation_surf = BASICFONT.render('Generation: %s' % generation, True, TEXTCOLOR)
+    #     generation_rect = generation_surf.get_rect()
+    #     generation_rect.topleft = (WINDOWWIDTH - 150, 80)
+    #     DISPLAYSURF.blit(generation_surf, generation_rect)
 
 def draw_piece(piece, pixelx=None, pixely=None):
     """Draw piece"""
@@ -633,9 +606,7 @@ def draw_next_piece(piece):
     draw_piece(piece, pixelx=WINDOWWIDTH-150, pixely=160)
 
 
-##############################################################################
 # GAME STATISTICS FUNCTIONS
-##############################################################################
 
 def calc_move_info(board, piece, x, r, total_holes_bef, total_blocking_bloks_bef):
     """Calculate informations based on the current play"""
@@ -664,8 +635,8 @@ def calc_move_info(board, piece, x, r, total_holes_bef, total_blocking_bloks_bef
     # Calculate the sides in contact
     piece_sides, floor_sides, wall_sides = calc_sides_in_contact(board, piece)
 
-    # Calculate removed lines
-    num_removed_lines = remove_complete_lines(new_board)
+    # Calculate removed rows
+    num_removed_rows = remove_complete_rows(new_board)
 
     total_blocking_block = 0
     total_holes          = 0
@@ -680,7 +651,7 @@ def calc_move_info(board, piece, x, r, total_holes_bef, total_blocking_bloks_bef
     new_holes           = total_holes - total_holes_bef
     new_blocking_blocks = total_blocking_block - total_blocking_bloks_bef
 
-    return [True, max_height, num_removed_lines, new_holes, new_blocking_blocks, piece_sides, floor_sides, wall_sides]
+    return [True, max_height, num_removed_rows, new_holes, new_blocking_blocks, piece_sides, floor_sides, wall_sides]
 
 def calc_initial_move_info(board):
     total_holes          = 0
@@ -695,10 +666,10 @@ def calc_initial_move_info(board):
     return total_holes, total_blocking_bocks
 
 def calc_heuristics(board, x):
-    """Calculate heuristics
-
-    The heuristics are composed by: number of holes, number of blocks above
-    hole and maximum height.
+    """
+        Calculate heuristics
+        The heuristics are composed by: number of holes, number of blocks above
+        hole and maximum height.
 
     """
     total_holes        = 0
@@ -733,18 +704,18 @@ def calc_sides_in_contact(board, piece):
         for Py in range(TEMPLATEHEIGHT):
 
             # Wall
-            if not PIECES[piece['shape']][piece['rotation']][Py][Px] == BLANK: # Quadrante faz parte da peça
+            if not PIECES[piece['shape']][piece['rotation']][Py][Px] == BLANK: # Quadrant is part of the piece
                 if piece['x']+Px == 0 or piece['x']+Px == BOARDWIDTH-1:
                     wall_sides += 1
 
                 if piece['y']+Py == BOARDHEIGHT-1:
                     floor_sides += 1
                 else:
-                # Para outras opecas no contorno do template:
+                # For other parts in the template outline:
                     if Py == TEMPLATEHEIGHT-1 and not board[piece['x']+Px][piece['y']+Py+1] == BLANK:
                         piece_sides += 1
 
-                #os extremos do template sao colorido: confere se ha pecas do lado deles
+                # Edges of the template are colored: check if there are pieces on their side
                 if Px == 0 and piece['x']+Px > 0 and not board[piece['x']+Px-1][piece['y']+Py] == BLANK:
                         piece_sides += 1
 
@@ -752,9 +723,8 @@ def calc_sides_in_contact(board, piece):
                         piece_sides += 1
 
             # Other pieces in general
-            elif piece['x']+Px < BOARDWIDTH and piece['x']+Px >= 0 and piece['y']+Py < BOARDHEIGHT and not board[piece['x']+Px][piece['y']+Py] == BLANK:  #quadrante do tabuleiro colorido mas nao do template
+            elif piece['x']+Px < BOARDWIDTH and piece['x']+Px >= 0 and piece['y']+Py < BOARDHEIGHT and not board[piece['x']+Px][piece['y']+Py] == BLANK: 
 
-                # O quadrante vazio do template esta colorido no tabuleiro
                 if not PIECES[piece['shape']][piece['rotation']][Py-1][Px] == BLANK:
                     piece_sides += 1
 
@@ -763,7 +733,5 @@ def calc_sides_in_contact(board, piece):
 
                 if Px < TEMPLATEWIDTH-1 and not PIECES[piece['shape']][piece['rotation']][Py][Px+1] == BLANK:
                     piece_sides += 1
-
-                    #(nao pode haver pecas em cima)
 
     return  piece_sides, floor_sides, wall_sides

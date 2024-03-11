@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 
-
 class Information:
     """class for graph ploting"""
 
