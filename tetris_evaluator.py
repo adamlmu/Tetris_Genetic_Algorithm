@@ -30,8 +30,7 @@ class TetrisEvaluator(SimpleIndividualEvaluator):
         print(individual_vector)
         chromo = chromosome(individual_vector)
         game_state = ai.run_game(chromo)
-        chromo.calc_fitness(game_state)
-        fitness_value = chromo.score
+        fitness_value = game_state[2]
 
         return fitness_value
 

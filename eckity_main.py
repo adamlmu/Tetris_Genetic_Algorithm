@@ -7,16 +7,16 @@ from eckity.genetic_operators.selections.tournament_selection import TournamentS
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 from time import process_time
-from TetrisEvaluator import TetrisEvaluator
+from tetris_evaluator import TetrisEvaluator
 
-def eckity(pop,gen):
+def eckity_algo():
     start_time = process_time()
     output_file = open("output.txt", "w")
 
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(creators=GAFloatVectorCreator(length=7, gene_creator=None, bounds=(-1.0, 1.0), events=None),
-                      population_size=pop,
+                      population_size=20,
                       # user-defined fitness evaluation method
                       evaluator=TetrisEvaluator(),
                       # maximization problem (fitness is sum of values), so higher fitness is better
@@ -34,8 +34,8 @@ def eckity(pop,gen):
         breeder=SimpleBreeder(),
         # executor='thread',
         max_workers=1,
-        max_generation=gen-1,
-        statistics=BestAverageWorstStatistics(output_stream=output_file)
+        max_generation=2,
+        statistics=BestAverageWorstStatistics()
     )
 
     # evolve the generated initial population

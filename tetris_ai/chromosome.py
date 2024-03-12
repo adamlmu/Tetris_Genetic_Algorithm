@@ -5,10 +5,6 @@ class chromosome():
         self.weights = weights
         self.score   = 0
 
-    def calc_fitness(self, game_state):
-        """Calculate fitness"""
-        self.score = game_state[2]
-
     def calc_best_move(self, board, piece):
         """Calculate best movement
         Select the best move based on the chromosome weights.

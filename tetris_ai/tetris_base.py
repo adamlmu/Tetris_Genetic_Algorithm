@@ -570,11 +570,11 @@ def draw_status(score, level, generation):
         levelRect.topleft = (WINDOWWIDTH - 150, 50)
         DISPLAYSURF.blit(levelSurf, levelRect)
 
-    # if(generation != None):
-    #     generation_surf = BASICFONT.render('Generation: %s' % generation, True, TEXTCOLOR)
-    #     generation_rect = generation_surf.get_rect()
-    #     generation_rect.topleft = (WINDOWWIDTH - 150, 80)
-    #     DISPLAYSURF.blit(generation_surf, generation_rect)
+    else:
+        generation_surf = BASICFONT.render('Generation: %s' % generation, True, TEXTCOLOR)
+        generation_rect = generation_surf.get_rect()
+        generation_rect.topleft = (WINDOWWIDTH - 150, 80)
+        DISPLAYSURF.blit(generation_surf, generation_rect)
 
 def draw_piece(piece, pixelx=None, pixely=None):
     """Draw piece"""

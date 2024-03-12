@@ -17,7 +17,7 @@ def run_game(chromosome):
     pygame.display.set_caption('Tetris AI')
 
     # Initialize the game parameters
-    game.FPS = int(1000000000)
+    game.FPS = int(100000000)
     game.main(isGame=False)
     max_score = 22000
 
@@ -64,7 +64,6 @@ def run_game(chromosome):
                 # GAME-OVER: Can't fit a new piece on the board, so game over.
                 alive = False
                 counter += 1
-                print(counter)
 
         if time.time() - last_fall_time > fall_freq:
             if not game.is_valid_position(board, falling_piece, adj_Y=1):
@@ -111,7 +110,7 @@ def run_game(chromosome):
         pygame.display.update()
         game.FPSCLOCK.tick(game.FPS)
 
-        if(counter == 101):
+        if(counter == 21):
             counter = 0
             generation += 1
 
