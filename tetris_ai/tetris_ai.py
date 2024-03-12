@@ -17,7 +17,7 @@ def run_game(chromosome):
     pygame.display.set_caption('Tetris AI')
 
     # Initialize the game parameters
-    game.FPS = int(100000000)
+    game.FPS = int(10000)
     game.main(isGame=False)
     max_score = 22000
 
