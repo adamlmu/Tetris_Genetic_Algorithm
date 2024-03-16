@@ -6,7 +6,7 @@ counter = 0
 generation = 0
 
 def run_game(chromosome):
-    global counter, generation
+    global counter, generation, flag
     
     # Initialize Pygame
     pygame.init()
@@ -17,7 +17,7 @@ def run_game(chromosome):
     pygame.display.set_caption('Tetris AI')
 
     # Initialize the game parameters
-    game.FPS = int(10000)
+    game.FPS = int(100000000)
     game.main(isGame=False)
     max_score = 22000
 
@@ -36,6 +36,8 @@ def run_game(chromosome):
 
     alive = True
     win = False
+
+    flag = True
 
     # Game loop
     while alive:
@@ -110,12 +112,14 @@ def run_game(chromosome):
         pygame.display.update()
         game.FPSCLOCK.tick(game.FPS)
 
-        if(counter == 21):
-            counter = 0
+        if counter == 40 and generation == 0:  # Check if it's the first 41 counts
             generation += 1
+            counter = 0
+        elif counter == 20 and generation !=0:  # Check every 21 counts thereafter
+            generation += 1
+            counter = 0
 
     # Save the game state
     game_state = [num_used_pieces, removed_rows, score, win]
 
     return game_state
-
