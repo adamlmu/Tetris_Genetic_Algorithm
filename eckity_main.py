@@ -34,7 +34,7 @@ def eckity_algo():
         breeder=SimpleBreeder(),
         # executor='thread',
         max_workers=1,
-        max_generation=2,
+        max_generation=15,
         statistics=BestAverageWorstStatistics()
     )
 

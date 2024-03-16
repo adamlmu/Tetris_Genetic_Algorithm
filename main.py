@@ -24,7 +24,7 @@ if __name__ == "__main__":
         info = Information()
         info.read_file()
         print(f"Best Fitness calculated: {info.best_fitness}")
-        info.plot_graph()
+        #info.plot_graph()
 
     elif (args.game):
         # Just run the base game

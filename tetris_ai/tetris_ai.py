@@ -6,7 +6,7 @@ counter = 0
 generation = 0
 
 def run_game(chromosome):
-    global counter, generation
+    global counter, generation, flag
     
     # Initialize Pygame
     pygame.init()
@@ -36,6 +36,8 @@ def run_game(chromosome):
 
     alive = True
     win = False
+
+    flag = True
 
     # Game loop
     while alive:
@@ -110,9 +112,12 @@ def run_game(chromosome):
         pygame.display.update()
         game.FPSCLOCK.tick(game.FPS)
 
-        if(counter == 21):
-            counter = 0
+        if counter == 40 and generation == 0:  
             generation += 1
+            counter = 0
+        elif counter == 20 and generation !=0: 
+            generation += 1
+            counter = 0
 
     # Save the game state
     game_state = [num_used_pieces, removed_rows, score, win]
