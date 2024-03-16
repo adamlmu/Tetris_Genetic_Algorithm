@@ -112,10 +112,10 @@ def run_game(chromosome):
         pygame.display.update()
         game.FPSCLOCK.tick(game.FPS)
 
-        if counter == 40 and generation == 0:  # Check if it's the first 41 counts
+        if counter == 40 and generation == 0: 
             generation += 1
             counter = 0
-        elif counter == 20 and generation !=0:  # Check every 21 counts thereafter
+        elif counter == 20 and generation !=0: 
             generation += 1
             counter = 0
 
